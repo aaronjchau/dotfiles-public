@@ -1,0 +1,119 @@
+// Zed keymap — docs: https://zed.dev/docs/key-bindings
+//
+// ─────────────────────────────────────────────────────────────────────────
+// Two rules this file relies on (https://zed.dev/docs/key-bindings):
+//   1. There is NO "unbind" field in Zed. To remove a default binding, bind
+//      the key to `null`.
+//   2. Precedence = deeper context first, THEN later definition. A `null` in a
+//      DEEPER context also suppresses the same key bound in a shallower one, so
+//      to override an Editor-context default (e.g. cmd-\) you must REBIND it in
+//      the Editor context — not null it there and bind it in Workspace.
+// ─────────────────────────────────────────────────────────────────────────
+[
+  // cmd-j → toggle the terminal. Default cmd-j = workspace::ToggleBottomDock
+  // (Workspace context); rebinding it here in the same context overrides that.
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-j": "terminal_panel::Toggle"
+    }
+  },
+  // File-finder cmd-j (pane::SplitDown) only fires there; free it and move
+  // the downward split to alt-cmd--.
+  {
+    "context": "FileFinder || (FileFinder > Picker > Editor) || (FileFinder > Picker > menu)",
+    "bindings": {
+      "cmd-j": null,
+      "alt-cmd--": "pane::SplitDown"
+    }
+  },
+  // keep a way to toggle the bottom dock itself
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-cmd-6": "workspace::ToggleBottomDock"
+    }
+  },
+  // cmd-1 → jump focus back to the editor. editor::ToggleFocus dispatches at
+  // the workspace level, so it works from the terminal/panels too.
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-1": "editor::ToggleFocus"
+    }
+  },
+
+  // cmd-\ → toggle LEFT dock; free cmd-b.
+  // Default cmd-\ = pane::SplitRight, defined in the (deeper) Editor context,
+  // so we rebind it in Editor too — otherwise SplitRight wins while editing.
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-\\": "workspace::ToggleLeftDock",
+      "cmd-b": null
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "cmd-\\": "workspace::ToggleLeftDock"
+    }
+  },
+
+  // alt-cmd-\ → toggle RIGHT dock; free cmd-r.
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-cmd-\\": "workspace::ToggleRightDock",
+      "cmd-r": null
+    }
+  },
+
+  // cmd-| (and cmd-_) → toggle workspace sidebar; free cmd-alt-j.
+  // Default cmd-| = editor::MoveToEnclosingBracket (Editor context), so rebind
+  // it in Editor too for the same reason as cmd-\ above.
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-|": "multi_workspace::ToggleWorkspaceSidebar",
+      "cmd-_": "multi_workspace::ToggleWorkspaceSidebar",
+      "cmd-alt-j": null
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "cmd-|": "multi_workspace::ToggleWorkspaceSidebar"
+    }
+  },
+
+  // cmd-! → project panel; free cmd-shift-e (Workspace + AgentPanel).
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-!": "project_panel::ToggleFocus",
+      "cmd-shift-e": null
+    }
+  },
+  {
+    "context": "AgentPanel",
+    "bindings": {
+      "cmd-shift-e": null
+    }
+  },
+
+  // cmd-@ → git panel; free ctrl-shift-g and the GitPanel `escape` toggle.
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-@": "git_panel::ToggleFocus",
+      "ctrl-shift-g": null
+    }
+  },
+  {
+    "context": "GitPanel && ChangesList && !GitBranchSelector",
+    "bindings": {
+      "escape": null
+    }
+  }
+]

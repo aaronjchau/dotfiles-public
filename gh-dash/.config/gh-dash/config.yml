@@ -1,0 +1,122 @@
+prSections:
+    - title: My Pull Requests
+      filters: is:open author:@me
+    - title: Needs My Review
+      filters: is:open review-requested:@me
+    - title: Involved
+      filters: is:open involves:@me -author:@me
+issuesSections:
+    - title: My Issues
+      filters: is:open author:@me
+    - title: Assigned
+      filters: is:open assignee:@me
+    - title: Involved
+      filters: is:open involves:@me -author:@me
+notificationsSections:
+    - title: All
+      filters: ""
+    - title: Created
+      filters: reason:author
+    - title: Participating
+      filters: reason:participating
+    - title: Mentioned
+      filters: reason:mention
+    - title: Review Requested
+      filters: reason:review-requested
+    - title: Assigned
+      filters: reason:assign
+    - title: Subscribed
+      filters: reason:subscribed
+    - title: Team Mentioned
+      filters: reason:team-mention
+repo:
+    branchesRefetchIntervalSeconds: 30
+    prsRefetchIntervalSeconds: 60
+defaults:
+    preview:
+        open: true
+        width: 0.45
+        height: 0.6
+        position: auto
+    prsLimit: 20
+    prApproveComment: LGTM
+    issuesLimit: 20
+    notificationsLimit: 20
+    view: prs
+    layout:
+        prs:
+            updatedAt:
+                width: 5
+            createdAt:
+                width: 5
+            repo:
+                width: 20
+            author:
+                width: 15
+            authorIcon:
+                hidden: false
+            labels:
+                width: 22
+                hidden: true
+            assignees:
+                width: 20
+                hidden: true
+            base:
+                width: 15
+                hidden: true
+            lines:
+                width: 15
+        issues:
+            updatedAt:
+                width: 5
+            createdAt:
+                width: 5
+            repo:
+                width: 15
+            creator:
+                width: 10
+            creatorIcon:
+                hidden: false
+            assignees:
+                width: 20
+                hidden: true
+    refetchIntervalMinutes: 30
+keybindings:
+    prs:
+        # Ctrl+P: render the PR body markdown in mdterm. --json body only (not gh's cluttered
+        # default). Absolute path: ~/.cargo/bin isn't on the subprocess PATH. -T = theme;
+        # mdterm's -s = SLIDES, never pass "-s dark".
+        - key: ctrl+p
+          name: mdterm
+          command: >
+            d="$(mktemp -d)";
+            gh pr view {{.PrNumber}} --repo {{.RepoName}} --json body --jq '.body' > "$d/pr-{{.PrNumber}}.md" &&
+            "$HOME/.cargo/bin/mdterm" -T dark "$d/pr-{{.PrNumber}}.md"
+repoPaths: {}
+theme: 
+    ui: 
+        sectionsShowCount: true
+        table:
+            showSeparator: true
+            compact: false
+    colors:
+        text:
+            primary: "#DCD7BA"     # fujiWhite (fg)
+            secondary: "#7E9CD8"   # crystalBlue (accent)
+            inverted: "#1F1F28"    # sumiInk3 (bg)
+            faint: "#727169"       # fujiGray (comment)
+            warning: "#E6C384"     # carpYellow
+            success: "#98BB6C"     # springGreen
+            error: "#E46876"       # waveRed
+        background:
+            selected: "#2D4F67"    # waveBlue2 (selection bg)
+        border:
+            primary: "#7E9CD8"     # crystalBlue (accent)
+            secondary: "#54546D"   # sumiInk6 (dark border)
+            faint: "#16161D"       # sumiInk0 (bg-dark)
+pager:
+    diff: "diffnav"
+confirmQuit: false
+showAuthorIcons: true
+smartFilteringAtLaunch: true
+includeReadNotifications: true

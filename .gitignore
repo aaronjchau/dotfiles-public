@@ -1,0 +1,30 @@
+# ── Managed by `ya pkg` — restored via `ya pkg install` from package.toml ──
+yazi/.config/yazi/plugins/
+yazi/.config/yazi/flavors/
+
+# ── OS / editor noise ──
+.DS_Store
+*.swp
+*~
+
+# ── Build / cache junk (e.g. regenerated inside tracked Claude skills) ──
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+node_modules/
+
+# ── Secrets (defense-in-depth) ──
+*.local
+# un-ignore the bin Stow tree (its .local dir matches *.local above)
+!bin/.local/
+*secret*
+*secrets*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+.env
+.netrc
+hosts.yml
+

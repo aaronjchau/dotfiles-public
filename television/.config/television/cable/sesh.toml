@@ -1,0 +1,33 @@
+# sesh — session manager as a tv channel. Opened from a tmux popup (see ~/.tmux.conf).
+# Sources cycled with Ctrl-s: tmux sessions by recency (default) -> all (+zoxide) -> zoxide -> fd scan of ~.
+# `output` strips the leading Nerd-Font icon so the bare name/path reaches sesh connect.
+[metadata]
+name = "sesh"
+description = "Session manager: tmux sessions (default), then zoxide dirs + fd scan"
+requirements = ["sesh", "fd"]
+
+[source]
+command = [
+  "sesh list --icons",
+  "sesh list -z --icons",
+  "fd -H -d 2 -t d -E .Trash . ~",
+]
+ansi = true
+output = "{strip_ansi|split: :1..|join: }"
+
+[preview]
+command = "sesh preview '{strip_ansi|split: :1..|join: }'"
+
+[keybindings]
+enter = "actions:connect"
+ctrl-d = ["actions:kill_session", "reload_source"]
+
+[actions.connect]
+description = "Connect to the selected session"
+command = "sesh connect '{strip_ansi|split: :1..|join: }'"
+mode = "execute"
+
+[actions.kill_session]
+description = "Kill the selected tmux session"
+command = "tmux kill-session -t '{strip_ansi|split: :1..|join: }'"
+mode = "fork"

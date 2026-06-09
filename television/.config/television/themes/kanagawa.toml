@@ -1,0 +1,26 @@
+# Kanagawa (Wave) — custom theme for television.
+# Palette: rebelot/kanagawa.nvim (Wave). Matches ghostty/nvim/tmux/yazi/lazygit.
+# general
+background = '#1F1F28'          # sumiInk3 — default bg
+border_fg = '#727169'          # fujiGray — muted border
+text_fg = '#DCD7BA'            # fujiWhite — fg
+dimmed_text_fg = '#C8C093'     # oldWhite — dim fg
+# input
+input_text_fg = '#E46876'      # waveRed
+result_count_fg = '#E46876'    # waveRed
+# results
+result_name_fg = '#7E9CD8'     # crystalBlue
+result_line_number_fg = '#E6C384'  # carpYellow
+result_value_fg = '#C8C093'    # oldWhite
+selection_fg = '#98BB6C'       # springGreen
+selection_bg = '#2D4F67'       # waveBlue2 — selection bg
+match_fg = '#E46876'           # waveRed
+# preview
+preview_title_fg = '#957FB8'   # oniViolet
+# modes
+channel_mode_fg = '#1F1F28'
+channel_mode_bg = '#E6C384'    # carpYellow
+remote_control_mode_fg = '#1F1F28'
+remote_control_mode_bg = '#98BB6C'  # springGreen
+action_picker_mode_fg = '#1F1F28'
+action_picker_mode_bg = '#957FB8'   # oniViolet

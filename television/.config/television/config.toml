@@ -1,0 +1,64 @@
+# television — fuzzy finder.  https://github.com/alexpasmantier/television
+# Channels live in ./cable/*.toml (each = a source + preview + actions).
+# Run `tv` (default channel) or `tv <channel>` e.g. `tv sesh`, `tv text`.
+
+tick_rate = 50
+default_channel = "files"
+history_size = 200
+global_history = false
+
+[ui]
+ui_scale = 100
+orientation = "landscape"
+theme = "kanagawa"            # ~/.config/television/themes/kanagawa.toml
+
+[ui.input_bar]
+position = "top"
+prompt = ">"
+border_type = "rounded"
+
+[ui.results_panel]
+border_type = "rounded"
+
+[ui.preview_panel]
+size = 60                     # % of width given to the preview
+scrollbar = true
+border_type = "rounded"
+
+[ui.status_bar]
+separator_open = ""
+separator_close = ""
+
+[ui.help_panel]
+show_categories = true
+hidden = true
+
+# Keybindings — vim-friendly (ctrl-j/k navigate).
+[keybindings]
+esc = "quit"
+ctrl-c = "quit"
+ctrl-n = "select_next_entry"
+ctrl-j = "select_next_entry"
+ctrl-p = "select_prev_entry"
+ctrl-k = "select_prev_entry"
+ctrl-up = "select_prev_history"
+ctrl-down = "select_next_history"
+tab = "toggle_selection_down"
+backtab = "toggle_selection_up"
+enter = "confirm_selection"
+ctrl-d = "scroll_preview_half_page_down"
+ctrl-u = "scroll_preview_half_page_up"
+ctrl-s = "cycle_sources"      # toggle between a channel's source variants (e.g. all/tmux/zoxide for sesh)
+ctrl-y = "copy_entry_to_clipboard"
+ctrl-r = "toggle_remote_control"   # channel switcher
+ctrl-o = "toggle_preview"
+ctrl-f = "cycle_previews"
+f9 = "toggle_help"
+
+# Shell integration is OPT-IN (not active without `eval "$(tv init zsh)"`, which would
+# rebind Ctrl-T/Ctrl-R away from fzf). Left off so fzf keeps Ctrl-R; triggers below only apply if enabled.
+[shell_integration.channel_triggers]
+"dirs" = ["cd", "ls", "z"]
+"files" = ["cat", "bat", "vim", "nvim", "cp", "mv", "rm"]
+"git-log" = ["git log", "git show"]
+"text" = ["rg", "grep"]

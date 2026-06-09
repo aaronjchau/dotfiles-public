@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Block the commit if gitleaks detects a secret in the STAGED changes.
+# Active via: git config core.hooksPath .githooks
+set -uo pipefail
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+	echo "⚠️  gitleaks not installed — skipping secret scan (brew install gitleaks)."
+	exit 0
+fi
+
+if ! gitleaks protect --staged --no-banner -v; then
+	echo ""
+	echo "❌ gitleaks flagged a potential secret in your staged changes. Commit blocked."
+	echo "   Review the finding above. Unstage it, or allowlist if it's a false positive."
+	exit 1
+fi

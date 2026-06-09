@@ -1,0 +1,17 @@
+# Kanagawa (Wave) — flavor installed via `ya pkg add dangooddd/kanagawa`.
+# Keep this file to just [flavor] unless overriding specific styles.
+[flavor]
+dark  = "kanagawa"
+light = "kanagawa"
+
+# git.yazi status markers as plain letters (overrides the flavor's icon signs;
+# colors come from the flavor's [git] styles).
+[git]
+modified_sign  = "M"
+added_sign     = "A"
+untracked_sign = "?"
+ignored_sign   = "I"
+deleted_sign   = "D"
+updated_sign   = "U"
+unknown_sign   = " "
+clean_sign     = ""

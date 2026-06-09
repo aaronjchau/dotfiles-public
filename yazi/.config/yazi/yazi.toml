@@ -1,0 +1,80 @@
+[mgr]
+ratio = [1, 2, 3]
+# Show hidden (dotfiles) by default. Gitignored files always show too; git.yazi just marks them "I".
+show_hidden = true
+
+[flavor]
+dark = "kanagawa"
+
+# Standalone yazi opens files in nvim (Enter / `o`). Overrides only the `edit`
+# opener; image/video/archive openers and global $EDITOR are untouched.
+[opener]
+edit = [
+  { run = 'nvim %s', block = true, for = "unix" },
+]
+
+[[plugin.prepend_fetchers]]
+url = "*"
+run = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url = "*/"
+run = "git"
+group = "git"
+
+# mactag: detect macOS Finder tags so they can show inline in the file list.
+[[plugin.prepend_fetchers]]
+id    = "mactag"
+url   = "*"
+run   = "mactag"
+group = "mactag"
+[[plugin.prepend_fetchers]]
+id    = "mactag"
+url   = "*/"
+run   = "mactag"
+group = "mactag"
+
+# Markdown previews via mdterm (through the piper plugin).
+# --width=$w fits the preview pane; mdterm emits ANSI even when piped.
+[[plugin.prepend_previewers]]
+url = "*.md"
+run = 'piper -- $HOME/.cargo/bin/mdterm --width=$w --theme=dark "$1"'
+
+# Jupyter notebooks via nbpreview.yazi (wraps the `nbpreview` pipx CLI).
+# Schema note: yazi v26 uses `url` here, not the README's `name`.
+[[plugin.prepend_previewers]]
+url = "*.ipynb"
+run = "nbpreview"
+
+# DuckDB interactive previews for data files (rows J/K, columns H/L, K-at-top
+# toggles standard/summary). Needs a previewer AND preloader per type; use `url`, not the README's `name`.
+[[plugin.prepend_previewers]]
+url = "*.csv"
+run = "duckdb"
+[[plugin.prepend_previewers]]
+url = "*.tsv"
+run = "duckdb"
+[[plugin.prepend_previewers]]
+url = "*.json"
+run = "duckdb"
+[[plugin.prepend_previewers]]
+url = "*.parquet"
+run = "duckdb"
+
+[[plugin.prepend_preloaders]]
+url = "*.csv"
+run = "duckdb"
+multi = false
+[[plugin.prepend_preloaders]]
+url = "*.tsv"
+run = "duckdb"
+multi = false
+[[plugin.prepend_preloaders]]
+url = "*.json"
+run = "duckdb"
+multi = false
+[[plugin.prepend_preloaders]]
+url = "*.parquet"
+run = "duckdb"
+multi = false

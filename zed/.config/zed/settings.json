@@ -1,0 +1,157 @@
+// Zed settings — docs: https://zed.dev/docs/configuring-zed
+{
+  "cli_default_open_behavior": "new_window",
+  "terminal": {
+    "dock": "right",
+    "font_family": "FiraCode Nerd Font"
+  },
+  "icon_theme": "Colored Zed Icons Theme Dark",
+  "minimum_split_diff_width": 100.0,
+  "inlay_hints": {
+    "show_value_hints": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "enabled": false
+  },
+  "code_lens": "off",
+  "languages": {
+    "Python": {
+      "inlay_hints": {
+        "enabled": true
+      }
+    }
+  },
+  "edit_predictions": {
+    "open_ai_compatible_api": {
+      "api_url": "",
+      "model": ""
+    },
+    "allow_data_collection": "no"
+  },
+  "diff_view_style": "split",
+  "tab_size": 4,
+  "toolbar": {
+    "selections_menu": true,
+    "breadcrumbs": true,
+    "quick_actions": false
+  },
+  "minimap": {
+    "thumb": "always",
+    "show": "auto"
+  },
+  "active_pane_modifiers": {
+    "inactive_opacity": 1.0
+  },
+  "bottom_dock_layout": "contained",
+  "tabs": {
+    "file_icons": true,
+    "git_status": true
+  },
+  "search": {
+    "button": true
+  },
+  "status_bar": {
+    "show_active_file": false
+  },
+  "debugger": {
+    "button": false
+  },
+  "diagnostics": {
+    "button": false
+  },
+  "proxy": "",
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "default_model": {
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
+      "enable_thinking": true,
+      "effort": "xhigh"
+    },
+    "inline_assistant_model": {
+        "provider": "openai-subscribed",
+        "model": "gpt-5.5",
+        "enable_thinking": true,
+        "effort": "xhigh"
+    },
+    "commit_message_model": {
+        "provider": "openai-subscribed",
+        "model": "gpt-5.5",
+        "enable_thinking": true,
+        "effort": "xhigh"
+    },
+    "notify_when_agent_waiting": "never",
+    "sidebar_side": "right",
+    "button": true,
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "collapse_untracked_diff": true,
+    "show_count_badge": false,
+    "diff_stats": true,
+    "file_icons": true,
+    "status_style": "label_color",
+    "tree_view": true,
+    "dock": "left"
+  },
+  "agent_servers": {
+    "codex-acp": {
+      "type": "registry"
+    },
+    "claude-acp": {
+      "type": "registry"
+    }
+  },
+  "git": {
+    "hunk_style": "staged_hollow",
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  "base_keymap": "VSCode",
+  "tab_bar": {
+    "show_tab_bar_buttons": true,
+    "show": true
+  },
+  "relative_line_numbers": "enabled",
+  "gutter": {
+    "line_numbers": true
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  "buffer_font_fallbacks": [
+    "Iosevka Term",
+    "Menlo",
+    "Monaco",
+    "Courier New",
+    "monospace"
+  ],
+  "buffer_font_family": "JetBrainsMono-Medium",
+  "completions": {
+    "lsp_insert_mode": "replace_suffix",
+    "words": "disabled"
+  },
+  "show_completions_on_input": true,
+  "show_edit_predictions": false,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "vim_mode": true,
+  "ui_font_size": 20.0,
+  "buffer_font_size": 17.0,
+  "theme": "Kanagawa Wave",
+}

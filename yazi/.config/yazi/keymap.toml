@@ -1,0 +1,68 @@
+# lazygit.yazi — open lazygit in the current dir on Ctrl+G.
+[[mgr.prepend_keymap]]
+on = "<C-g>"
+run = "plugin lazygit"
+desc = "Open lazygit"
+
+# Read the hovered Markdown in mdterm — Ctrl-p; scroll j/k or arrows, q to return.
+# Absolute path because ~/.cargo/bin isn't on yazi's subprocess PATH. -T = theme
+# (mdterm's -s is SLIDES, not glow's style flag).
+[[mgr.prepend_keymap]]
+on = "<C-p>"
+run = "shell '$HOME/.cargo/bin/mdterm -T dark %s' --block"
+desc = "Read Markdown in mdterm"
+
+# DuckDB column scroll. The README's bare `plugin duckdb -1` FAILS on yazi v26
+# ("invalid digit found in string"); the `--` separator passes the arg as a positional
+# (g u needs no `--` — `-ui` starts with a letter).
+# H/L override history nav.
+[[mgr.prepend_keymap]]
+on = "H"
+run = "plugin duckdb -- -1"
+desc = "DuckDB: scroll one column left"
+[[mgr.prepend_keymap]]
+on = "L"
+run = "plugin duckdb -- +1"
+desc = "DuckDB: scroll one column right"
+[[mgr.prepend_keymap]]
+on = ["g", "o"]
+run = "plugin duckdb -open"
+desc = "Open with duckdb"
+[[mgr.prepend_keymap]]
+on = ["g", "u"]
+run = "plugin duckdb -ui"
+desc = "Open with duckdb UI"
+
+# clipboard.yazi — `y` yanks natively AND mirrors files to the macOS clipboard;
+# `g p` pastes files from the system clipboard.
+[[mgr.prepend_keymap]]
+on = "y"
+run = ["yank", "plugin clipboard -- --action=copy"]
+desc = "Yank + copy to system clipboard"
+[[mgr.prepend_keymap]]
+on = ["g", "p"]
+run = "plugin clipboard -- --action=paste"
+desc = "Paste file(s) from system clipboard"
+
+# what-size.yazi — total size of the selection (or cwd).
+[[mgr.prepend_keymap]]
+on = ["g", "s"]
+run = "plugin what-size"
+desc = "Calculate size of selection"
+
+# open-here — open the hovered file in a new Chrome window, kept in the current AeroSpace
+# space (not workspace C). Absolute path: ~/.local/bin isn't on yazi's subprocess PATH.
+[[mgr.prepend_keymap]]
+on = ["g", "b"]
+run = "shell '$HOME/.local/bin/open-here %s'"
+desc = "Open in browser (current space)"
+
+# mactag.yazi — add/remove macOS Finder tags (then pick a color: r/o/y/g/b/p).
+[[mgr.prepend_keymap]]
+on = ["b", "a"]
+run = "plugin mactag add"
+desc = "Tag selected files"
+[[mgr.prepend_keymap]]
+on = ["b", "r"]
+run = "plugin mactag remove"
+desc = "Untag selected files"

@@ -1,0 +1,202 @@
+# AeroSpace — tiling window manager.  https://nikitabobko.github.io/AeroSpace/guide
+# First run: launch the app once and grant Accessibility permission.
+#
+# Note: `alt-*` hotkeys are GLOBAL and shadow same-key app bindings (e.g.
+# Neovim's <A-j>/<A-k>). Change the focus/move modifier here if that collides.
+
+config-version = 2          # opt into the current config schema
+start-at-login = true
+
+# Keep the window tree predictable.
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Default layout for new windows.
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'   # wide monitors tile horizontally, tall ones vertically
+
+# Mouse follows focus: center cursor in the focused window (lazy = skip if already inside).
+on-focus-changed = ['move-mouse window-lazy-center']
+# Recenter the mouse on the monitor you just focused (when switching monitors).
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# cmd-h no-op: under tiling a hidden window vanishes from the layout with no cue.
+automatically-unhide-macos-hidden-apps = true
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
+
+[mode.main.binding]
+# Layout toggles
+alt-slash = 'layout tiles horizontal vertical'      # toggle tiling orientation
+alt-comma = 'layout accordion horizontal vertical'  # toggle accordion (stacked)
+
+# Focus a window — vim directions
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move the focused window
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Join the focused window into a neighbor to build a split (on arrows to avoid
+# clashing with the alt-shift-hjkl move bindings above).
+alt-shift-left = 'join-with left'
+alt-shift-down = 'join-with down'
+alt-shift-up = 'join-with up'
+alt-shift-right = 'join-with right'
+
+# Resize the focused window
+alt-minus = 'resize smart -50'
+alt-equal = 'resize smart +50'
+
+# Switch to a workspace — Option + number, or a letter tied to an app
+# (A=Music C=Chrome D=Dev I=AI M=Messaging N=Notion S=Safari).
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+alt-a = 'workspace A'
+alt-c = 'workspace C'
+alt-d = 'workspace D'
+alt-i = 'workspace I'
+alt-m = 'workspace M'
+alt-n = 'workspace N'
+alt-s = 'workspace S'
+
+# Send the focused window to a workspace (Option+Shift + number/letter)
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+alt-shift-a = 'move-node-to-workspace A'
+alt-shift-c = 'move-node-to-workspace C'
+alt-shift-d = 'move-node-to-workspace D'
+alt-shift-i = 'move-node-to-workspace I'
+alt-shift-m = 'move-node-to-workspace M'
+alt-shift-n = 'move-node-to-workspace N'
+alt-shift-s = 'move-node-to-workspace S'
+
+# Bounce to the previous workspace; move a workspace to the next monitor
+alt-tab = 'workspace-back-and-forth'
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# AeroSpace-native fullscreen — on alt-ctrl-f, since alt-f is now "workspace F"
+alt-ctrl-f = 'fullscreen'
+
+# Toggle the focused window between floating and tiled (one press, no service mode)
+alt-shift-f = 'layout floating tiling'
+
+# Less-frequent actions live in a sub-mode
+alt-shift-semicolon = 'mode service'
+
+[mode.service.binding]
+esc = ['reload-config', 'mode main']                       # reload this file
+r = ['flatten-workspace-tree', 'mode main']                # reset the layout tree
+f = ['layout floating tiling', 'mode main']                # toggle float for this window
+backspace = ['close-all-windows-but-current', 'mode main']
+
+# Join the focused window into a neighbor to build a split
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
+
+# A few apps behave better floating than tiled.
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.ActivityMonitor'
+run = 'layout floating'
+
+# ── Auto-assign apps to workspaces (an app opens → lands on its fixed workspace) ──
+# A = Music · C = Chrome · D = Dev (Ghostty / Zed / VS Code) · I = AI (Claude / ChatGPT)
+# M = Messaging (Messages / Mail / Notion Mail) · N = Notion (Notion / Calendar) · S = Safari
+[[on-window-detected]]
+if.app-id = 'com.apple.Music'
+run = 'move-node-to-workspace A'
+
+# nvim markdown-preview opens a Chrome window titled "Markdown Preview" — keep it in the
+# current workspace, tiled side-by-side, instead of sending it to C. First match wins, so
+# this must precede the general Chrome rule below.
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+if.window-title-regex-substring = 'Markdown Preview'
+run = 'layout tiling'
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace D'
+
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = 'move-node-to-workspace D'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace D'
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace I'
+
+[[on-window-detected]]
+if.app-id = 'com.openai.chat'
+run = 'move-node-to-workspace I'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-id = 'notion.mail.id'
+run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-id = 'notion.id'
+run = 'move-node-to-workspace N'
+
+[[on-window-detected]]
+if.app-id = 'com.cron.electron'
+run = 'move-node-to-workspace N'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = 'move-node-to-workspace S'

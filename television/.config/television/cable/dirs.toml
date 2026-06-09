@@ -1,0 +1,20 @@
+# dirs — pick a directory under the cwd and drop a shell into it.
+[metadata]
+name = "dirs"
+description = "Find a directory and cd into it"
+requirements = ["fd", "eza"]
+
+[source]
+command = ["fd -t d", "fd -t d --hidden"]
+
+[preview]
+command = "eza -la --color=always --icons '{}'"
+
+[keybindings]
+shortcut = "f2"
+enter = "actions:cd"
+
+[actions.cd]
+description = "Open a shell in the selected directory"
+command = "cd '{}' && $SHELL"
+mode = "execute"

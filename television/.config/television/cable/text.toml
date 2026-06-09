@@ -1,0 +1,30 @@
+# text — live ripgrep across the project (content search). Enter opens nvim at the line.
+# Ctrl-s cycles: visible files → +hidden.
+[metadata]
+name = "text"
+description = "Grep file contents (ripgrep) and jump to the match"
+requirements = ["rg", "bat"]
+
+[source]
+command = [
+  "rg . --no-heading --line-number --colors 'match:fg:white' --colors 'path:fg:blue' --color=always",
+  "rg . --no-heading --line-number --hidden --colors 'match:fg:white' --colors 'path:fg:blue' --color=always",
+]
+ansi = true
+output = "{strip_ansi|split:\\::..2}"
+
+[preview]
+command = "bat -n --color=always '{strip_ansi|split:\\::0}'"
+env = { BAT_THEME = "ansi" }
+offset = "{strip_ansi|split:\\::1}"
+
+[ui]
+preview_panel = { header = "{strip_ansi|split:\\::..2}" }
+
+[keybindings]
+enter = "actions:edit"
+
+[actions.edit]
+description = "Open the file in nvim at the matched line"
+command = "nvim '+{strip_ansi|split:\\::1}' '{strip_ansi|split:\\::0}'"
+mode = "execute"

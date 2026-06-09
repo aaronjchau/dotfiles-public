@@ -1,0 +1,40 @@
+# lazygit config — https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+
+git:
+  # Diff pager (exactly one active). delta: side-by-side, keeps per-line/hunk staging.
+  pagers:
+    - pager: delta --dark --paging=never --line-numbers --side-by-side
+    # difftastic alternative (structural; no line/hunk staging). Swap: comment delta above, uncomment this.
+    # - externalDiffCommand: difft --color=always
+
+  # All-branches commit graph. Open with `a` in the Status panel (1 to focus); `A` = oldest-first.
+  allBranchesLogCmds:
+    - git log --graph --all --oneline --decorate --color=always
+
+gui:
+  # Nerd Fonts v3 — enables file-type icons in the file/branch panels.
+  nerdFontsVersion: "3"
+
+  # Kanagawa (Wave) — matches tmux/yazi/nvim/ghostty.
+  theme:
+    activeBorderColor: ["#7E9CD8", "bold"]
+    inactiveBorderColor: ["#727169"]
+    optionsTextColor: ["#7E9CD8"]
+    selectedLineBgColor: ["#2D4F67"]
+    cherryPickedCommitFgColor: ["#7E9CD8"]
+    cherryPickedCommitBgColor: ["#223249"]
+    markedBaseCommitFgColor: ["#7E9CD8"]
+    markedBaseCommitBgColor: ["#E6C384"]
+    unstagedChangesColor: ["#E46876"]
+    defaultFgColor: ["#DCD7BA"]
+    searchingActiveBorderColor: ["#E6C384"]
+
+customCommands:
+  # Open a file's version AT the selected commit in Zed (vs built-in e/o = working tree).
+  # `git show <hash>:<path>` into a temp file. `| quote` is required (lazygit doesn't escape
+  # template vars); `&&` aborts if the path is missing at that commit (no empty file).
+  - key: '<c-e>'
+    context: 'commitFiles'    # the panel shown after pressing <enter> on a commit
+    description: "Open file's version at this commit in Zed"
+    command: 'file={{.SelectedCommitFile.Name | quote}}; hash={{.SelectedCommit.Hash | quote}}; dir="$(mktemp -d)"; base="$(basename "$file")"; git show "$hash:$file" > "$dir/$base" && zed "$dir/$base"'
+    output: log

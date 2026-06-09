@@ -1,0 +1,22 @@
+# files — fuzzy file picker. Ctrl-s cycles: tracked → +hidden → +ignored.
+# Enter opens in nvim. Default channel.
+[metadata]
+name = "files"
+description = "Find files and open them in nvim"
+requirements = ["fd", "bat"]
+
+[source]
+command = ["fd -t f", "fd -t f -H", "fd -t f -H -I"]
+
+[preview]
+command = "bat -n --color=always '{}'"
+env = { BAT_THEME = "ansi" }   # ansi = renders in the terminal's palette; always available
+
+[keybindings]
+shortcut = "f1"
+enter = "actions:edit"
+
+[actions.edit]
+description = "Open the selected file(s) in nvim"
+command = "nvim '{}'"
+mode = "execute"

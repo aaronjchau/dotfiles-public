@@ -1,0 +1,12 @@
+# sesh — smart tmux session manager.  https://github.com/joshmedeski/sesh
+# Stowed to ~/.config/sesh/sesh.toml.
+
+# Hide the floax floating terminal (prefix + p) from the picker — floax names its
+# session "scratch"; it's a transient scratchpad, not a project to switch into.
+# `sesh list -b` still surfaces blacklisted sessions for management.
+blacklist = ["scratch"]
+
+[default_session]
+# Runs only when sesh CREATES a session. `nvim` (no arg) opens in the session cwd;
+# :q drops to a shell there. Use "nvim ." to open the dir as a buffer.
+startup_command = "nvim"

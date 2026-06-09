@@ -1,0 +1,26 @@
+# zoxide — jump to a frequently-used directory (sourced from zoxide's frecency db).
+[metadata]
+name = "zoxide"
+description = "Jump to a frecent directory from zoxide history"
+requirements = ["zoxide", "eza"]
+
+[source]
+command = "zoxide query -l"
+no_sort = true
+
+[preview]
+command = "eza -la --color=always --icons '{}'"
+
+[keybindings]
+enter = "actions:cd"
+ctrl-d = "actions:remove"
+
+[actions.cd]
+description = "cd into the selected directory"
+command = "cd '{}' && $SHELL"
+mode = "execute"
+
+[actions.remove]
+description = "Remove the selected directory from zoxide's db"
+command = "zoxide remove '{}'"
+mode = "fork"

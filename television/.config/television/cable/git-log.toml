@@ -1,0 +1,28 @@
+# git-log — browse commits. Preview shows the full patch. Acts on the selected hash.
+[metadata]
+name = "git-log"
+description = "Browse git log; cherry-pick / revert / checkout a commit"
+requirements = ["git"]
+
+[source]
+command = "git log --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --color=always"
+output = "{strip_ansi|split: :1}"
+ansi = true
+no_sort = true
+
+[preview]
+command = "git show -p --stat --pretty=fuller --color=always '{strip_ansi|split: :1}' | head -n 1000"
+
+[keybindings]
+ctrl-y = "actions:cherry-pick"
+ctrl-o = "actions:checkout"
+
+[actions.cherry-pick]
+description = "Cherry-pick the selected commit"
+command = "git cherry-pick '{strip_ansi|split: :1}'"
+mode = "execute"
+
+[actions.checkout]
+description = "Checkout the selected commit"
+command = "git checkout '{strip_ansi|split: :1}'"
+mode = "execute"

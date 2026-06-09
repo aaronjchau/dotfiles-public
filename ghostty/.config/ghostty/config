@@ -1,0 +1,39 @@
+# Ghostty — https://ghostty.org/docs/config
+# Reload after edits: ⌘⇧, (reload config) — or quit + reopen Ghostty.
+# NOTE: Ghostty has NO trailing comments — a '#' after a value becomes part of
+# the value. Keep every comment on its own line.
+
+# ── Font (font-size is the #1 thing to tweak) ──
+font-family = Maple Mono NF
+font-size = 15
+# Maple Mono NF draws Nerd Font icons small in the cell; bump their max height
+# so they fill it more. Only affects icons, not text or powerline.
+adjust-icon-height = 20%
+
+# ── Theme — matches tmux / yazi / nvim / lazygit ──
+theme = Kanagawa Wave
+
+# ── Window & appearance ──
+# background-opacity: 1 = solid, lower = more see-through.
+background-opacity = 0.95
+# background-blur: frosted blur radius behind the transparent bg (0 = off).
+background-blur = 20
+window-padding-x = 8
+window-padding-y = 4
+# even padding instead of leftover pixels on one edge:
+window-padding-balance = true
+mouse-hide-while-typing = true
+# copy-on-select is on (a Ghostty default).
+
+# ── Titlebar: hidden, but keep the rounded corners ──
+# `hidden` hides the titlebar + buttons but (unlike window-decoration = none)
+# keeps the window frame, so corners stay rounded. No bar to drag from;
+# option+click a frame edge to move. Run-time switching can be buggy — fully reopen.
+macos-titlebar-style = hidden
+# Title surfaces in ⌘-Tab / Mission Control, so keep it a quoted blank space
+# to hide stale session names. (An unquoted blank resets to the program default.)
+title = " "
+
+# ── macOS keys ──
+# Option = Alt, so nvim/tmux Alt-keybindings (e.g. <A-j>/<A-k>) work.
+macos-option-as-alt = true

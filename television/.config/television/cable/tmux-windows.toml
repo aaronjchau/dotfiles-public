@@ -1,0 +1,29 @@
+# tmux-windows — switch windows in the current session. Opened from a tmux popup (prefix w).
+# Current window hidden (-f window_active==0), rest sorted by window_activity (most-
+# recently-active first); the activity field is then stripped so the line stays
+# index-first for the plain space-split below.
+[metadata]
+name = "tmux-windows"
+description = "Switch between tmux windows in the current session"
+requirements = ["tmux"]
+
+[source]
+command = "tmux list-windows -f '#{==:#{window_active},0}' -F '#{window_activity} #{window_index}  #{window_name}  [#{pane_current_command}]' | sort -rn | cut -d' ' -f2-"
+output = "{split: :0}"
+
+[preview]
+command = "tmux capture-pane -ep -t '{split: :0}' 2>/dev/null || echo 'no preview'"
+
+[keybindings]
+enter = "actions:select"
+ctrl-d = ["actions:kill", "reload_source"]
+
+[actions.select]
+description = "Switch to the selected window"
+command = "tmux select-window -t '{split: :0}'"
+mode = "execute"
+
+[actions.kill]
+description = "Kill the selected window"
+command = "tmux kill-window -t '{split: :0}'"
+mode = "fork"
