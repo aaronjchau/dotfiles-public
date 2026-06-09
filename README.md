@@ -1,5 +1,9 @@
 # Dotfiles
 
+<p align="center">
+  <img src="assets/terminal.webp" width="720" alt="Kanagawa-themed terminal: tmux, Neovim, and yazi">
+</p>
+
 These are my personal config files for the terminal, Neovim, and a set of CLI tools, all matching the [Kanagawa](https://github.com/rebelot/kanagawa.nvim) color scheme. They work on macOS, Linux, and WSL.
 
 The setup uses [GNU Stow](https://www.gnu.org/software/stow/) to symlink everything in this repo into your home folder. A gitleaks check runs on every commit to help prevent accidental commits of keys.
